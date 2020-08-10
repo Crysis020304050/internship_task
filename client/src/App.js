@@ -1,13 +1,13 @@
 import React, {Suspense} from 'react';
 import './App.css';
-import {Router, Route, Switch} from 'react-router-dom';
-import browserHistory from './browserHistory';
+import {Router, Switch, Route} from 'react-router-dom';
+import history from './browserHistory';
 import Spinner from "./components/Spinner";
 
 const App = props => {
 
   return (
-    <Router history={browserHistory}>
+    <Router history={history}>
       <Suspense fallback={Spinner}>
         <Switch>
           <Route exact path='/login'/>
