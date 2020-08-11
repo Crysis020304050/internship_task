@@ -4,9 +4,9 @@ import rootReducer from '../reducers'
 import rootSaga from "../sagas";
 
 const configureStore = () => {
-    const sagaMW = createSagaMiddleware();
-    const store = createStore(rootReducer, applyMiddleware(sagaMW));
-    sagaMW.run(rootSaga);
+    const sagaMiddleware = createSagaMiddleware();
+    const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+    sagaMiddleware.run(rootSaga);
     return store;
 };
 

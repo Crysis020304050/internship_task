@@ -7,6 +7,7 @@ const Error = ({error: {status, data}, clearError}) => {
 
     const getMessage = () => {
         switch (status) {
+            case 403:
             case 404:
                 return data;
             default:
@@ -14,7 +15,7 @@ const Error = ({error: {status, data}, clearError}) => {
         }
     };
 
-    return(
+    return (
         <div className={styles.errorContainer}>
             <span>{getMessage()}</span>
             <CancelIcon onClick={clearError}/>
