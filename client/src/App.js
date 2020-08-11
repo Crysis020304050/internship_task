@@ -1,9 +1,9 @@
-import React, {Suspense} from 'react';
-import './App.css';
+import React, {lazy, Suspense} from 'react';
 import {Router, Switch, Route} from 'react-router-dom';
 import history from './browserHistory';
 import Spinner from "./components/Spinner";
-import LoginPage from "./pages/LoginPage";
+
+const LoginPage = lazy(() => import('./pages/LoginPage'));
 
 const App = props => {
 
