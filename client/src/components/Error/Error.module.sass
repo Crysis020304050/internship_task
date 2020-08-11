@@ -1,0 +1,27 @@
+@import "src/styles/styles.module"
+
+.errorContainer
+  width: 200px
+  align-self: center
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 26px
+  padding: 15px 10px
+  background-color: $error-color
+  position: relative
+  span
+    font-size: 16px
+    color: white
+  svg
+    color: black
+    font-size: 26px
+    position: absolute
+    cursor: pointer
+    top: -4px
+    right: -4px
+    transition: font-size 0.2s
+    &:hover
+      top: -8px
+      right: -8px
+      font-size: 32px
