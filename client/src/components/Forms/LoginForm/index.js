@@ -6,6 +6,8 @@ import {renderFields} from "../../../utils";
 import fieldsData from './fieldsData';
 import SubmitButton from "../../FormComponents/SubmitButton";
 import PropTypes from 'prop-types';
+import validator from "../../../validators/validator";
+import validationSchemas from "../../../validators/validationSchemas";
 
 const LoginForm = ({handleSubmit, loginRequest, isFetching, responseError, dispatch, className}) => {
 
@@ -41,4 +43,5 @@ LoginForm.propTypes = {
 
 export default connect(null, mapDispatchToProps)(reduxForm({
     form: 'login',
+    validate: validator(validationSchemas.LoginSchema)
 })(LoginForm))
