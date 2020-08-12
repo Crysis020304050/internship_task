@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "crysis",
+    "password": "user",
+    "database": "user_list",
+    "host": "localhost",
+    "dialect": "postgres",
+    "operatorsAliases": "Op"
+  }
+}
