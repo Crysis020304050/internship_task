@@ -28,5 +28,17 @@
     "name": "confirmPassword",
     "type": "password",
     "label": "Confirm Password"
+  },
+  {
+    "id": 6,
+    "name": "birthday",
+    "type": "date",
+    "label": "Birthday"
+  },
+  {
+    "id": 7,
+    "name": "creditCard",
+    "type": "text",
+    "label": "Credit Card Number"
   }
 ]
