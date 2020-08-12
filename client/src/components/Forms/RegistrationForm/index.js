@@ -13,10 +13,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {RadioButtonGroup} from 'redux-form-material-ui';
 import styles from './RegistrationForm.module.sass';
 import constants from '../../../constants';
+import FormField from '../../FormComponents/FormField';
 
 const RegistrationForm = ({handleSubmit, registerRequest, isFetching, responseError, dispatch, className}) => {
 
-    const {USER_CHARACTERISTIC: {GENDER: {OTHER, MALE, FEMALE}}} = constants;
+    const {USER_CHARACTERISTIC: {GENDER: {OTHER, MALE, FEMALE}}, VALIDATION: {CREDIT_CARD_MASK}} = constants;
 
     useEffect(() => {
         if (responseError && responseError.status === 409) {
@@ -31,6 +32,7 @@ const RegistrationForm = ({handleSubmit, registerRequest, isFetching, responseEr
             {
                 renderFields(fieldsData)
             }
+            <Field name='creditCard' label='Credit Card Number' component={FormField} {...CREDIT_CARD_MASK}/>
             <MuiThemeProvider>
                 <div className={styles.choseGenderContainer}>
                     <span>Chose your gender:</span>
