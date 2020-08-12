@@ -4,6 +4,6 @@ import FormField from "../components/FormComponents/FormField";
 
 export const renderFields = (fieldsData = []) => (
     fieldsData.map(fieldData => (
-        <Field key={fieldData.id} {...fieldData} component={FormField}/>
+        <Field key={fieldData.name} {...fieldData} component={FormField}/>
     ))
 );

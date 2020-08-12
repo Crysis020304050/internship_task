@@ -1,12 +1,10 @@
 [
   {
-    "id": 1,
     "name": "email",
     "type": "text",
     "label": "Email Address"
   },
   {
-    "id": 2,
     "name": "password",
     "type": "password",
     "label": "Password"

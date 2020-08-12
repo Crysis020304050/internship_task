@@ -11,6 +11,7 @@ export default {
     RegistrationSchema: yup.object().shape({
         firstName: yup.string().matches(VALIDATION.NAME_PATTERN, VALIDATION.NAME_PATTERN_MESSAGE).required().label('First Name'),
         lastName: yup.string().matches(VALIDATION.NAME_PATTERN, VALIDATION.NAME_PATTERN_MESSAGE).required().label('Last Name'),
+        login: yup.string().matches(VALIDATION.NAME_PATTERN, VALIDATION.NAME_PATTERN_MESSAGE).required().label('Login'),
         email: yup.string().email().required().label('Email Address'),
         password: yup.string().matches(VALIDATION.PASSWORD_PATTERN, VALIDATION.PASSWORD_PATTERN_MESSAGE).required().label('Password'),
         confirmPassword: yup.string().required().oneOf([yup.ref('password')], 'Confirm password must match password').label('Confirm Password'),
