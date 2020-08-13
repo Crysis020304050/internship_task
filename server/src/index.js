@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const PORT = process.env.NODE_ENV || 5000;
 const errorHandler = require('./errorHandler');
+const router = require('./routers');
+const {FAKE_ENV: {PORT}} = require('./constants');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(router);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

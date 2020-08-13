@@ -1,9 +1,7 @@
 module.exports = Object.freeze({
     VALIDATION: {
         PASSWORD_PATTERN: /^\S{6,32}$/,
-        PASSWORD_PATTERN_MESSAGE: 'Password should not has any whitespace characters and be not longer that 32 characters',
         NAME_PATTERN: /(?!^ +$)^.{1,64}$/,
-        NAME_PATTERN_MESSAGE: 'Field must has at least one non whitespace character and be not longer than 64 characters',
     },
     USER_CHARACTERISTIC: {
         GENDER: {
@@ -15,5 +13,12 @@ module.exports = Object.freeze({
             CUSTOMER: 'customer',
             ADMIN: 'admin',
         }
+    },
+    FAKE_ENV: {
+        PORT: 5000,
+        JWT_SECRET: 'secret',
+        ACCESS_TOKEN_TIME: 60 * 10,
+        REFRESH_TOKEN_TIME: 60 * 60 * 24 * 30,
+        SALT_ROUNDS: 5,
     }
 });
