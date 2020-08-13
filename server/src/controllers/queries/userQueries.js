@@ -3,7 +3,7 @@ const BadRequestError = require('../../errors/BadRequestError');
 const NotFoundError = require('../../errors/NotFoundError');
 
 module.exports.createUser = async data => {
-    const user = await db.Users.create(data);
+    const user = await db.User.create(data);
     if (user) {
         return user.get({plain: true});
     }
@@ -11,7 +11,7 @@ module.exports.createUser = async data => {
 };
 
 module.exports.findUser = async (predicate) => {
-    const user = await db.Users.findOne({where: predicate});
+    const user = await db.User.findOne({where: predicate});
     if (user) {
         return user.get({plain: true});
     }
@@ -19,7 +19,7 @@ module.exports.findUser = async (predicate) => {
 };
 
 module.exports.updateUser = async (data, predicate) => {
-    const [updatedRowsCount, [updatedUser]] = await db.Users.update(data,
+    const [updatedRowsCount, [updatedUser]] = await db.User.update(data,
         { where: predicate, returning: true, raw: true });
     if (updatedRowsCount) {
         return updatedUser;

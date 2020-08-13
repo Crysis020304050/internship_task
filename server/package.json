@@ -23,6 +23,6 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.4",
     "sequelize-cli": "^6.2.0",
-    "yap": "^0.0.2"
+    "yup": "^0.29.3"
   }
 }

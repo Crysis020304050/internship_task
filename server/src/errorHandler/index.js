@@ -1,4 +1,5 @@
 module.exports = (err, req, res, next) => {
+    console.log(err);
     if (err.name === 'SequelizeUniqueConstraintError') {
         err.message = 'A record with such parameters already exists';
         err.code = 409;

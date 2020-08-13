@@ -8,27 +8,26 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       firstName: {
-        type: Sequelize.STRING(64),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       lastName: {
-        type: Sequelize.STRING(64),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       login: {
-        type: Sequelize.STRING(64),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       email: {
-        type: Sequelize.STRING(256),
+        type: Sequelize.TEXT,
         allowNull: false,
-        unique: true,
       },
       password: {
-        type: Sequelize.STRING(32),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       birthday: {

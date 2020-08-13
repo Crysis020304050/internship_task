@@ -6,30 +6,30 @@ module.exports = (sequelize, DataTypes) => {
     class User extends Model {
 
         static associate(models) {
-            User.hasMany(models.RefreshToken, {foreignKey: 'user_id'});
+            User.hasMany(models.RefreshToken, {foreignKey: 'userId'});
         }
     }
 
     User.init({
         firstName: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         lastName: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         login: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         email: {
-            type: DataTypes.STRING(256),
+            type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
         },
         password: {
-            type: DataTypes.STRING(32),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         birthday: {

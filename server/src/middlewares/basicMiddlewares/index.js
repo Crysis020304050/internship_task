@@ -1,20 +1,20 @@
-const {prepareUserToSending} = require('../../utils');
+const {prepareUserToSending, signTokens} = require('../../utils');
 
 module.exports.sendAuthData = (req, res, next) => {
-    const {accessTokenValue, refreshTokenValue, user} = req;
+    const {tokenPair, user} = req;
     res.send({
         user: prepareUserToSending(user),
-        tokenPair: {
-            accessToken: accessTokenValue,
-            refreshToken: refreshTokenValue,
-        },
+        tokenPair,
     });
 };
 
 module.exports.sendTokens = (req, res, next) => {
-    const {accessTokenValue, refreshTokenValue} = req;
-    res.send({
-        accessToken: accessTokenValue,
-        refreshToken: refreshTokenValue,
-    });
+    const {tokenPair} = req;
+    res.send(tokenPair);
+};
+
+module.exports.signTokens = async (req, res, next) => {
+    const {user} = req;
+    req.tokenPair = await signTokens(user);
+    next();
 };
