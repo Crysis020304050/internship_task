@@ -20,5 +20,9 @@ export default Object.freeze({
             MALE: 'male',
             FEMALE: 'female',
         }
+    },
+    TOKENS: {
+        ACCESS_TOKEN_KEY: 'accessTokenKey',
+        REFRESH_TOKEN_KEY: 'refreshTokenKey'
     }
 });
