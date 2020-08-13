@@ -1,6 +1,6 @@
 const BadRequestError = require('../../errors/BadRequestError');
 
-const createValidationMiddleware = schema => (
+module.exports = schema => (
     async (req, res, next) => {
         try {
             const result = await schema.isValid(req.body);
@@ -13,5 +13,3 @@ const createValidationMiddleware = schema => (
         }
     }
 );
-
-module.exports = createValidationMiddleware;

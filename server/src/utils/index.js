@@ -18,3 +18,5 @@ module.exports.luhnAlgorithmCheck = num => {
     sum += lastDigit;
     return sum % 10 === 0;
 };
+
+module.exports.prepareUserToSending = ({password, ...rest}) => rest;
