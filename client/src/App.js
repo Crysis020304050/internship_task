@@ -1,12 +1,22 @@
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import history from './browserHistory';
 import Spinner from './components/Spinner';
+import constants from './constants';
+import {connect} from 'react-redux';
+import {authActionRequest} from './actions';
 
 const LoginPage = lazy(() => import('./pages/AuthPages/LoginPage'));
 const RegistrationPage = lazy(() => import('./pages/AuthPages/RegistrationPage'));
 
-const App = props => {
+const App = ({getUser}) => {
+
+    useEffect(() => {
+        const refreshToken = localStorage.getItem(constants.TOKENS.REFRESH_TOKEN_KEY);
+        if (refreshToken) {
+            getUser({refreshToken});
+        }
+    }, []);
 
     return (
         <Router history={history}>
@@ -21,4 +31,8 @@ const App = props => {
     );
 };
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+    getUser: (data) => dispatch(authActionRequest(data)),
+});
+
+export default connect(null, mapDispatchToProps)(App);

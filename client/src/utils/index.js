@@ -22,8 +22,8 @@ export const luhnAlgorithmCheck = num => {
     return sum % 10 === 0;
 };
 
-export const setTokens = (tokenPair) => {
-    const {accessToken, refreshToken} = tokenPair;
+export const setTokens = (authInfo) => {
+    const {accessToken, refreshToken} = authInfo;
     sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
 };

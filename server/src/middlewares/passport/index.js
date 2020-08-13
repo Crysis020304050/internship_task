@@ -3,25 +3,29 @@ const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const {findUser} = require('../../controllers/queries/userQueries');
-const {comparePasswords} = require('../../utils');
+const {createRefreshToken, findRefreshToken, updateRefreshTokenByModel} = require('../../controllers/queries/refreshTokenQueries');
+const {comparePasswords, signTokens} = require('../../utils');
 const {FAKE_ENV: {JWT_SECRET}} = require('../../constants');
 
-const localLogin = new LocalStrategy(
+const login = new LocalStrategy(
     {
         usernameField: 'email',
+        passReqToCallback: true
     },
-    async (email, password, done) => {
+    async (req, email, password, done) => {
         try {
             const user = await findUser({email});
             await comparePasswords(password, user.password);
-            done(null, user);
+            const tokensPair = await signTokens(user);
+            await createRefreshToken({value: tokensPair.refreshToken, userId: user.id});
+            done(null, user, tokensPair);
         } catch (e) {
-            done(null, false, e);
+            done(e, null);
         }
     }
 );
 
-const jwtLogin = new JwtStrategy(
+const refreshTokenLogin = new JwtStrategy(
     {
         jwtFromRequest: ExtractJWT.fromBodyField('refreshToken'),
         secretOrKey: JWT_SECRET,
@@ -29,14 +33,37 @@ const jwtLogin = new JwtStrategy(
     },
     async (req, payload, done) => {
         try {
-            const {id} = payload;
-            const {body: {refreshToken}} = req;
+            const {user: {id}} = payload;
+            const {body: {refreshToken: value}} = req;
+            const token = await findRefreshToken({value});
             const user = await findUser({id});
-            done(null, user);
+            const tokensPair = await signTokens(user);
+            await updateRefreshTokenByModel(token, {value: tokensPair.refreshToken});
+            done(null, user, tokensPair);
         } catch (e) {
-            done(null, false, e);
+            done(e, null);
         }
     }
 );
 
-module.exports = passport.use('localLogin', localLogin).use('jwtLogin', jwtLogin);
+const refreshTokens = new JwtStrategy(
+    {
+        jwtFromRequest: ExtractJWT.fromBodyField('refreshToken'),
+        secretOrKey: JWT_SECRET,
+        passReqToCallback: true
+    },
+    async (req, payload, done) => {
+        try {
+            const {user} = payload;
+            const {body: {refreshToken: value}} = req;
+            const token = await findRefreshToken({value});
+            const tokensPair = await signTokens(user);
+            await updateRefreshTokenByModel(token, {value: tokensPair.refreshToken});
+            done(null, null, tokensPair);
+        } catch (e) {
+            done(e, null);
+        }
+    }
+);
+
+module.exports = passport.use('login', login).use('refreshTokenLogin', refreshTokenLogin).use('refreshTokens', refreshTokens);

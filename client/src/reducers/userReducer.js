@@ -21,7 +21,7 @@ export default function (state = initialState, action) {
                 data: action.data,
             }
         }
-        case ACTION.AUTH_ACTION_ERROR: {
+        case ACTION.USER_STORE.AUTH_ACTION_ERROR: {
             return {
                 ...state,
                 isFetching: false,
