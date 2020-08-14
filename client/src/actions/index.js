@@ -1,29 +1,73 @@
 import ACTION from './actionTypes';
 
+const {USER_STORE, USERS_DATA_STORE} = ACTION;
+
 export const authActionRequest = data => ({
-    type: ACTION.USER_STORE.AUTH_ACTION_REQUEST,
+    type: USER_STORE.AUTH_ACTION_REQUEST,
     data,
 });
 
 export const authActionSuccess = (data) => ({
-    type: ACTION.USER_STORE.AUTH_ACTION_SUCCESS,
+    type: USER_STORE.AUTH_ACTION_SUCCESS,
     data,
 });
 
 export const authActionError = error => ({
-    type: ACTION.USER_STORE.AUTH_ACTION_ERROR,
+    type: USER_STORE.AUTH_ACTION_ERROR,
     error,
 });
 
 export const clearUserStoreError = () => ({
-   type: ACTION.USER_STORE.CLEAR_USER_STORE_ERROR,
+   type: USER_STORE.CLEAR_USER_STORE_ERROR,
 });
 
 export const logoutRequest = (data) => ({
-    type: ACTION.USER_STORE.LOGOUT_REQUEST,
+    type: USER_STORE.LOGOUT_REQUEST,
     data,
 });
 
 export const logoutResponse = () => ({
-    type: ACTION.USER_STORE.LOGOUT_RESPONSE,
+    type: USER_STORE.LOGOUT_RESPONSE,
+});
+
+export const getUsersRequest = () => ({
+    type: USERS_DATA_STORE.GET_USERS_REQUEST,
+});
+
+export const getUsersSuccess = (users) => ({
+    type: USERS_DATA_STORE.GET_USERS_SUCCESS,
+    users,
+});
+
+export const getUsersError = (error) => ({
+    type: USERS_DATA_STORE.GET_USERS_ERROR,
+    error,
+});
+
+export const changeUserDataRequest = (data) => ({
+    type: USERS_DATA_STORE.CHANGE_USER_DATA_REQUEST,
+    data,
+});
+
+export const changeUserDataSuccess = (user) => ({
+    type: USERS_DATA_STORE.CHANGE_USER_DATA_SUCCESS,
+    user,
+});
+
+export const changeUserDataError = (error) => ({
+    type: USERS_DATA_STORE.CHANGE_USER_DATA_ERROR,
+    error,
+});
+
+export const openUserEditingForm = (user) => ({
+    type: USERS_DATA_STORE.OPEN_USER_EDITING_FORM,
+    user,
+});
+
+export const closeUserEditingForm = () => ({
+    type: USERS_DATA_STORE.CLOSE_USER_EDITING_FORM,
+});
+
+export const clearUsersDataStoreError = () => ({
+    type: USERS_DATA_STORE.CLEAR_USERS_DATA_STORE_ERROR,
 });
