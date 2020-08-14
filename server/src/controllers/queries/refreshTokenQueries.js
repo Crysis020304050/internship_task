@@ -25,3 +25,11 @@ module.exports.updateRefreshToken = async (data, predicate) => {
     }
     throw new AuthorizationError();
 };
+
+module.exports.deleteRefreshToken = async (predicate) => {
+    const deletedRowCount = await db.RefreshToken.destroy({where: predicate});
+    if (deletedRowCount) {
+        return;
+    }
+    throw new AuthorizationError();
+};

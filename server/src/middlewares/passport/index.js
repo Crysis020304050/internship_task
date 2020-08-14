@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const {findUser} = require('../../controllers/queries/userQueries');
-const {createRefreshToken, findRefreshToken, updateRefreshToken} = require('../../controllers/queries/refreshTokenQueries');
+const {createRefreshToken, findRefreshToken, updateRefreshToken, deleteRefreshToken} = require('../../controllers/queries/refreshTokenQueries');
 const {comparePasswords, signTokens} = require('../../utils');
 const {FAKE_ENV: {JWT_SECRET}} = require('../../constants');
 
@@ -38,7 +38,7 @@ const refreshTokenLogin = new JwtStrategy(
             await findRefreshToken({value});
             const user = await findUser({id});
             const tokensPair = await signTokens(user);
-            await updateRefreshToken({value: tokensPair.refreshToken}, {userId: id});
+            await updateRefreshToken({value: tokensPair.refreshToken}, {value});
             done(null, user, tokensPair);
         } catch (e) {
             done(e, null);
@@ -58,7 +58,7 @@ const refreshTokens = new JwtStrategy(
             const {body: {refreshToken: value}} = req;
             await findRefreshToken({value});
             const tokensPair = await signTokens(user);
-            await updateRefreshToken({value: tokensPair.refreshToken}, {userId: user.id});
+            await updateRefreshToken({value: tokensPair.refreshToken}, {value});
             done(null, null, tokensPair);
         } catch (e) {
             done(e, null);
@@ -66,4 +66,21 @@ const refreshTokens = new JwtStrategy(
     }
 );
 
-module.exports = passport.use('login', login).use('refreshTokenLogin', refreshTokenLogin).use('refreshTokens', refreshTokens);
+const logout = new JwtStrategy(
+    {
+        jwtFromRequest: ExtractJWT.fromBodyField('refreshToken'),
+        secretOrKey: JWT_SECRET,
+        passReqToCallback: true
+    },
+    async (req, payload, done) => {
+        try {
+            const {body: {refreshToken: value}} = req;
+            await deleteRefreshToken({value});
+            done(null, null, null);
+        } catch (e) {
+            done(e, null);
+        }
+    }
+);
+
+module.exports = passport.use('login', login).use('refreshTokenLogin', refreshTokenLogin).use('refreshTokens', refreshTokens).use('logout', logout);
