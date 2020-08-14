@@ -18,3 +18,12 @@ export const authActionError = error => ({
 export const clearUserStoreError = () => ({
    type: ACTION.USER_STORE.CLEAR_USER_STORE_ERROR,
 });
+
+export const logoutRequest = (data) => ({
+    type: ACTION.USER_STORE.LOGOUT_REQUEST,
+    data,
+});
+
+export const logoutResponse = () => ({
+    type: ACTION.USER_STORE.LOGOUT_RESPONSE,
+});

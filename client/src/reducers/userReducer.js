@@ -8,7 +8,8 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case ACTION.USER_STORE.AUTH_ACTION_REQUEST: {
+        case ACTION.USER_STORE.AUTH_ACTION_REQUEST:
+        case ACTION.USER_STORE.LOGOUT_REQUEST: {
             return {
                 ...state,
                 isFetching: true,
@@ -33,6 +34,9 @@ export default function (state = initialState, action) {
                 ...state,
                 error: null
             }
+        }
+        case ACTION.USER_STORE.LOGOUT_RESPONSE: {
+            return initialState;
         }
         default:
             return state;

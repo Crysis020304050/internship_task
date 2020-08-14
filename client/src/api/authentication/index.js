@@ -18,3 +18,4 @@ export const loginRequest = async data => authenticateUser('login', data);
 export const loginUserByRefreshToken = async data => authenticateUser('refreshTokenLogin', data);
 
 export const refreshTokens = data => http.post('refreshTokens', data);
+export const logout = data => http.post('logout', data);
