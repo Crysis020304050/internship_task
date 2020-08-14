@@ -17,10 +17,11 @@ module.exports.findRefreshToken = async (predicate) => {
     throw new AuthorizationError();
 };
 
-module.exports.updateRefreshTokenByModel = async (tokenModel, data) => {
-    const updatedToken = await tokenModel.update(data);
-    if (updatedToken) {
-        return updatedToken;
+module.exports.updateRefreshToken = async (data, predicate) => {
+    const [updatedRowsCount, [updatedUser]] = await db.RefreshToken.update(data,
+        { where: predicate, returning: true, raw: true });
+    if (updatedRowsCount) {
+        return updatedUser;
     }
     throw new AuthorizationError();
 };

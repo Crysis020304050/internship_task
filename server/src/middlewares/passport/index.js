@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const {findUser} = require('../../controllers/queries/userQueries');
-const {createRefreshToken, findRefreshToken, updateRefreshTokenByModel} = require('../../controllers/queries/refreshTokenQueries');
+const {createRefreshToken, findRefreshToken, updateRefreshToken} = require('../../controllers/queries/refreshTokenQueries');
 const {comparePasswords, signTokens} = require('../../utils');
 const {FAKE_ENV: {JWT_SECRET}} = require('../../constants');
 
@@ -35,10 +35,10 @@ const refreshTokenLogin = new JwtStrategy(
         try {
             const {user: {id}} = payload;
             const {body: {refreshToken: value}} = req;
-            const token = await findRefreshToken({value});
+            await findRefreshToken({value});
             const user = await findUser({id});
             const tokensPair = await signTokens(user);
-            await updateRefreshTokenByModel(token, {value: tokensPair.refreshToken});
+            await updateRefreshToken({value: tokensPair.refreshToken}, {userId: id});
             done(null, user, tokensPair);
         } catch (e) {
             done(e, null);
@@ -56,9 +56,9 @@ const refreshTokens = new JwtStrategy(
         try {
             const {user} = payload;
             const {body: {refreshToken: value}} = req;
-            const token = await findRefreshToken({value});
+            await findRefreshToken({value});
             const tokensPair = await signTokens(user);
-            await updateRefreshTokenByModel(token, {value: tokensPair.refreshToken});
+            await updateRefreshToken({value: tokensPair.refreshToken}, {userId: user.id});
             done(null, null, tokensPair);
         } catch (e) {
             done(e, null);
