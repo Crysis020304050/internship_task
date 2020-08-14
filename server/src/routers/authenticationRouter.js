@@ -1,9 +1,10 @@
 const createValidationMiddleware = require('../middlewares/validation');
 const {RegistrationSchema, LoginSchema} = require('../validationSchemas');
 const hashPassword = require('../middlewares/hashPassword');
-const userController = require('../controllers/userController');
-const {signTokens, sendAuthData, sendTokens} = require('../middlewares/basicMiddlewares');
-const refreshTokenController = require('../controllers/refreshTokenController');
+const {createUser} = require('../controllers/userController');
+const {sendAuthData, sendTokens} = require('../middlewares/basicMiddlewares');
+const {verifyRefreshToken, signTokens} = require('../middlewares/tokenMiddlewares');
+const {findRefreshToken, createRefreshToken, updateRefreshToken, deleteRefreshToken} = require('../controllers/refreshTokenController');
 const passport = require('../middlewares/passport');
 const authenticationRouter = require('express')();
 
@@ -11,9 +12,9 @@ authenticationRouter.post(
     '/registration',
     createValidationMiddleware(RegistrationSchema),
     hashPassword,
-    userController.createUser,
+    createUser,
     signTokens,
-    refreshTokenController.createRefreshToken,
+    createRefreshToken,
     sendAuthData,
 );
 
@@ -32,8 +33,17 @@ authenticationRouter.post(
 
 authenticationRouter.post(
     '/refreshTokens',
-    passport.authenticate('refreshTokens', {session: false}),
+    verifyRefreshToken,
+    findRefreshToken,
+    signTokens,
+    updateRefreshToken,
     sendTokens,
+);
+
+authenticationRouter.post(
+    '/logout',
+    verifyRefreshToken,
+    deleteRefreshToken,
 );
 
 module.exports = authenticationRouter;

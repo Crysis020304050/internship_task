@@ -5,7 +5,6 @@ const {FAKE_ENV: {JWT_SECRET, ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME}} = require(
 const util = require('util');
 
 const sign = util.promisify(jwt.sign);
-const verify = util.promisify(jwt.verify);
 
 module.exports.comparePasswords = async (pass1, pass2) => {
     const result = await bcrypt.compare(pass1, pass2);

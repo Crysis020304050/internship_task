@@ -46,41 +46,4 @@ const refreshTokenLogin = new JwtStrategy(
     }
 );
 
-const refreshTokens = new JwtStrategy(
-    {
-        jwtFromRequest: ExtractJWT.fromBodyField('refreshToken'),
-        secretOrKey: JWT_SECRET,
-        passReqToCallback: true
-    },
-    async (req, payload, done) => {
-        try {
-            const {user} = payload;
-            const {body: {refreshToken: value}} = req;
-            await findRefreshToken({value});
-            const tokensPair = await signTokens(user);
-            await updateRefreshToken({value: tokensPair.refreshToken}, {value});
-            done(null, null, tokensPair);
-        } catch (e) {
-            done(e, null);
-        }
-    }
-);
-
-const logout = new JwtStrategy(
-    {
-        jwtFromRequest: ExtractJWT.fromBodyField('refreshToken'),
-        secretOrKey: JWT_SECRET,
-        passReqToCallback: true
-    },
-    async (req, payload, done) => {
-        try {
-            const {body: {refreshToken: value}} = req;
-            await deleteRefreshToken({value});
-            done(null, null, null);
-        } catch (e) {
-            done(e, null);
-        }
-    }
-);
-
-module.exports = passport.use('login', login).use('refreshTokenLogin', refreshTokenLogin).use('refreshTokens', refreshTokens).use('logout', logout);
+module.exports = passport.use('login', login).use('refreshTokenLogin', refreshTokenLogin);
