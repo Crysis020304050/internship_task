@@ -6,26 +6,29 @@ const initialState = {
     isFetching: false,
     error: null,
     users: [],
+    hasMore: true,
     currentEditingUser: null,
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
         case USERS_DATA_STORE.GET_USERS_REQUEST:
-        case USERS_DATA_STORE.CHANGE_USER_DATA_REQUEST: {
+        case USERS_DATA_STORE.UPDATE_USER_DATA_REQUEST: {
             return {
                 ...state,
                 isFetching: true,
             }
         }
         case USERS_DATA_STORE.GET_USERS_SUCCESS: {
+            const {users, hasMore} = action;
             return {
                 ...state,
-                users: [...state.users, ...action.users],
+                users: [...state.users, ...users],
+                hasMore,
                 isFetching: false,
             }
         }
-        case USERS_DATA_STORE.CHANGE_USER_DATA_SUCCESS: {
+        case USERS_DATA_STORE.UPDATE_USER_DATA_SUCCESS: {
             const updatedUsers = state.users.map(user => {
                 if (user.id === action.user.id) {
                     return action.user;
@@ -39,7 +42,7 @@ export default function (state = initialState, action) {
             }
         }
         case USERS_DATA_STORE.GET_USERS_ERROR:
-        case USERS_DATA_STORE.CHANGE_USER_DATA_ERROR: {
+        case USERS_DATA_STORE.UPDATE_USER_DATA_ERROR: {
             return {
                 ...state,
                 error: action.error,

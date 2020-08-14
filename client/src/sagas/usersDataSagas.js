@@ -4,8 +4,8 @@ import {getUsersSuccess, getUsersError, updateUserDataSuccess, updateUserDataErr
 
 export function* getUsersSaga({filter}) {
     try {
-        const users = yield getUsers(filter);
-        yield put(getUsersSuccess(users));
+        const {data} = yield getUsers(filter);
+        yield put(getUsersSuccess(data));
     } catch (e) {
         yield put(getUsersError(e.response || e));
     }

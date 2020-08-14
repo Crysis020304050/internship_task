@@ -35,9 +35,10 @@ export const getUsersRequest = (filter) => ({
     filter,
 });
 
-export const getUsersSuccess = (users) => ({
+export const getUsersSuccess = ({users, hasMore}) => ({
     type: USERS_DATA_STORE.GET_USERS_SUCCESS,
     users,
+    hasMore,
 });
 
 export const getUsersError = (error) => ({
