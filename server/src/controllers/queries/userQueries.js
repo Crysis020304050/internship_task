@@ -27,4 +27,4 @@ module.exports.updateUser = async (data, predicate) => {
     throw new BadRequestError();
 };
 
-module.exports.getUsers = async (filter) => await db.Users.findAll(filter);
+module.exports.getUsers = async (filter) => await db.User.findAll(filter);
