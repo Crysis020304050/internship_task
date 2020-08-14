@@ -5,9 +5,12 @@ import Spinner from './components/Spinner';
 import constants from './constants';
 import {connect} from 'react-redux';
 import {authActionRequest} from './actions';
+import PrivateHoc from './components/HOCs/PrivateHoc';
+import OnlyNotAuthorizedUserHoc from './components/HOCs/OnlyNotAuthorizedUserHoc';
 
 const LoginPage = lazy(() => import('./pages/AuthPages/LoginPage'));
 const RegistrationPage = lazy(() => import('./pages/AuthPages/RegistrationPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
 
 const App = ({getUser}) => {
 
@@ -22,9 +25,9 @@ const App = ({getUser}) => {
         <Router history={history}>
             <Suspense fallback={<Spinner/>}>
                 <Switch>
-                    <Route exact path='/login' component={LoginPage}/>
-                    <Route exact path='/registration' component={RegistrationPage}/>
-                    <Route exact path='/'/>
+                    <Route exact path='/login' component={OnlyNotAuthorizedUserHoc(LoginPage)}/>
+                    <Route exact path='/registration' component={OnlyNotAuthorizedUserHoc(RegistrationPage)}/>
+                    <Route exact path='/' component={PrivateHoc(HomePage)}/>
                 </Switch>
             </Suspense>
         </Router>
