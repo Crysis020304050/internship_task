@@ -15,7 +15,7 @@ module.exports.createUser = async (req, res, next) => {
 
 module.exports.getUsers = async (req, res, next) => {
     try {
-        const {tokenData: {role, id}, limit, offset} = req;
+        const {tokenData: {role, id}, body: {limit, offset}} = req;
         const users = await getUsers({
             where: {
                 id: {

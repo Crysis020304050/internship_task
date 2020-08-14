@@ -30,8 +30,9 @@ export const logoutResponse = () => ({
     type: USER_STORE.LOGOUT_RESPONSE,
 });
 
-export const getUsersRequest = () => ({
+export const getUsersRequest = (filter) => ({
     type: USERS_DATA_STORE.GET_USERS_REQUEST,
+    filter,
 });
 
 export const getUsersSuccess = (users) => ({
@@ -44,18 +45,18 @@ export const getUsersError = (error) => ({
     error,
 });
 
-export const changeUserDataRequest = (data) => ({
-    type: USERS_DATA_STORE.CHANGE_USER_DATA_REQUEST,
+export const updateUserDataRequest = (data) => ({
+    type: USERS_DATA_STORE.UPDATE_USER_DATA_REQUEST,
     data,
 });
 
-export const changeUserDataSuccess = (user) => ({
-    type: USERS_DATA_STORE.CHANGE_USER_DATA_SUCCESS,
+export const updateUserDataSuccess = (user) => ({
+    type: USERS_DATA_STORE.UPDATE_USER_DATA_SUCCESS,
     user,
 });
 
-export const changeUserDataError = (error) => ({
-    type: USERS_DATA_STORE.CHANGE_USER_DATA_ERROR,
+export const updateUserDataError = (error) => ({
+    type: USERS_DATA_STORE.UPDATE_USER_DATA_ERROR,
     error,
 });
 
