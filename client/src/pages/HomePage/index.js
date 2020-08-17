@@ -9,8 +9,9 @@ import UserInfoCard from '../../components/UserInfoCard';
 import Modal from '@material-ui/core/Modal';
 import UpdateUserForm from '../../components/Forms/UpdateUserForm';
 import ErrorBoundary from "../../components/ErrorBoundary";
+import userReducer from "../../reducers/userReducer";
 
-const HomePage = ({getUsers, users, error, isFetching, hasMore, openUserEditingForm, closeUserEditingForm, currentEditingUser, clearError}) => {
+const HomePage = ({getUsers, users, error, isFetching, hasMore, role, openUserEditingForm, closeUserEditingForm, currentEditingUser, clearError}) => {
 
     useEffect(() => {
         getUsers({limit: 8});
@@ -23,7 +24,7 @@ const HomePage = ({getUsers, users, error, isFetching, hasMore, openUserEditingF
         });
     };
 
-    const renderUserCard = () => users.map(user => <UserInfoCard key={user.id} user={user}
+    const renderUserCard = () => users.map(user => <UserInfoCard key={user.id} user={user} role={role}
                                                                  openUserEditingForm={openUserEditingForm}/>);
 
     return (
@@ -44,7 +45,10 @@ const HomePage = ({getUsers, users, error, isFetching, hasMore, openUserEditingF
     );
 };
 
-const mapStateToProps = state => state.usersDataStore;
+const mapStateToProps = state => {
+    const {usersDataStore, userStore: {data: {role}}} = state;
+    return {...usersDataStore, role};
+};
 
 const mapDispatchToProps = dispatch => ({
     getUsers: (filter) => dispatch(getUsersRequest(filter)),

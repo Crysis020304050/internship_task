@@ -19,6 +19,10 @@ export default Object.freeze({
             OTHER: 'other',
             MALE: 'male',
             FEMALE: 'female',
+        },
+        ROLE: {
+            CUSTOMER: 'customer',
+            ADMIN: 'admin',
         }
     },
     TOKENS: {

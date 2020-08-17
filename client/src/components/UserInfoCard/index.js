@@ -7,8 +7,9 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import constants from '../../constants';
 
-const UserInfoCard = ({user, openUserEditingForm}) => {
+const UserInfoCard = ({user, role, openUserEditingForm}) => {
 
     const {firstName, lastName, login, email, birthday, creditCard, gender} = user;
 
@@ -20,19 +21,23 @@ const UserInfoCard = ({user, openUserEditingForm}) => {
                 <Typography>{`Email: ${email}`}</Typography>
                 <Typography>{`Birthday: ${moment(birthday).format('YYYY-MM-DD')}`}</Typography>
                 <Typography>{`Gender: ${gender}`}</Typography>
-                {Boolean(creditCard) && <Typography>{`Credit Card: ${creditCard}`}</Typography>}
+                {
+                    role === constants.USER_CHARACTERISTIC.ROLE.ADMIN &&
+                    <>
+                        <Typography>{`Credit Card: ${creditCard}`}</Typography>
+                        <CardActions>
+                            <Button color='primary' onClick={() => openUserEditingForm(user)}>Update User</Button>
+                        </CardActions>
+                    </>
+                }
             </CardContent>
-            {
-                Boolean(creditCard) && <CardActions>
-                    <Button onClick={() => openUserEditingForm(user)}>Update User</Button>
-                </CardActions>
-            }
         </Card>
     );
 };
 
 UserInfoCard.propTypes = {
     user: PropTypes.object.isRequired,
+    role: PropTypes.string.isRequired,
     openUserEditingForm: PropTypes.func.isRequired,
 };
 
