@@ -1,10 +1,8 @@
 import axios from 'axios';
 import constants from "../constants";
-import history from "../browserHistory";
-import {refreshTokens} from "./authentication";
-import {setTokens, clearStorage} from "../utils";
+import {refreshTokensCase, unauthorizedCase} from './interceptorFunctions';
 
-const {LINKS: {BASE_URL}, TOKENS: {ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY}} = constants;
+const {LINKS: {BASE_URL}, TOKENS: {ACCESS_TOKEN_KEY}} = constants;
 
 const instance = axios.create({
     baseURL: BASE_URL,
@@ -19,21 +17,11 @@ instance.interceptors.response.use(response => response, async err => {
     const {response: {status}, config} = err;
     switch (status) {
         case 419: {
-            const {data} = await refreshTokens({
-                refreshToken: localStorage.getItem(REFRESH_TOKEN_KEY),
-            });
-            if (data) {
-                setTokens(data);
-                return instance.request(config);
-            } else {
-                clearStorage();
-                history.replace('/login');
-            }
+            await refreshTokensCase(instance, config);
             break;
         }
         case 401: {
-            clearStorage();
-            history.replace('/login');
+            unauthorizedCase();
             break;
         }
         default: {
