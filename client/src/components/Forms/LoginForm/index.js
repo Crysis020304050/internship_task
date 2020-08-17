@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {authActionRequest} from '../../../actions';
+import {authActionLoginRequest} from '../../../actions';
 import {reduxForm} from 'redux-form';
 import {renderFields} from "../../../utils";
 import fieldsData from './fieldsData';
@@ -19,7 +19,7 @@ const LoginForm = ({handleSubmit, loginRequest, isFetching, className}) => (
 );
 
 const mapDispatchToProps = dispatch => ({
-    loginRequest: (data) => dispatch(authActionRequest(data)),
+    loginRequest: (data) => dispatch(authActionLoginRequest(data)),
 });
 
 LoginForm.propTypes = {

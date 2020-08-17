@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {authActionRequest} from '../../../actions';
+import {authActionRegistrationRequest} from '../../../actions';
 import {reduxForm, Field} from 'redux-form';
 import {renderFields} from '../../../utils';
 import fieldsData from './fieldsData';
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    registerRequest: (data) => dispatch(authActionRequest(data)),
+    registerRequest: (data) => dispatch(authActionRegistrationRequest(data)),
 });
 
 RegistrationForm.propTypes = {

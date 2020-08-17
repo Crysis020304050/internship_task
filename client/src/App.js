@@ -4,7 +4,7 @@ import history from './browserHistory';
 import Spinner from './components/Spinner';
 import constants from './constants';
 import {connect} from 'react-redux';
-import {authActionRequest} from './actions';
+import {authActionRefreshTokenLoginRequest} from './actions';
 import PrivateHoc from './components/HOCs/PrivateHoc';
 import OnlyNotAuthorizedUserHoc from './components/HOCs/OnlyNotAuthorizedUserHoc';
 import ClearErrorHoc from "./components/HOCs/ClearErrorHoc";
@@ -36,7 +36,7 @@ const App = ({getUser}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    getUser: (data) => dispatch(authActionRequest(data)),
+    getUser: (data) => dispatch(authActionRefreshTokenLoginRequest(data)),
 });
 
 export default connect(null, mapDispatchToProps)(App);

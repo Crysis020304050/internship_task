@@ -5,35 +5,53 @@ import history from "../browserHistory";
 import {clearStorage} from "../utils";
 import {updateSyncErrors} from 'redux-form';
 
-export function* authenticationSaga({data}) {
+export function* registrationSaga({data}) {
     try {
-        const keysLength = Object.keys(data).length;
-        const response = keysLength > 1
-            ? keysLength > 2
-                ? yield authenticationController.registerRequest(data)
-                : yield authenticationController.loginRequest(data)
-            : yield authenticationController.loginUserByRefreshToken(data);
-        const {data: {user}} = response;
+        const {data: {user}} = yield authenticationController.registerRequest(data);
         yield put(authActionSuccess(user));
     } catch (e) {
-        if (e.response) {
-            const {response: {data, status}} = e;
+        const {response} = e;
+        if (response && response.status === 409) {
+            yield put(updateSyncErrors('registration', {email: 'This email is already in use'}));
+            yield put(authActionError());
+        } else {
+            yield put(authActionError(response || e));
+        }
+    }
+}
+
+export function* loginSaga({data}) {
+    try {
+        const {data: {user}} = yield authenticationController.loginRequest(data);
+        yield put(authActionSuccess(user));
+    } catch (e) {
+        const {response} = e;
+        if (response) {
+            const {data, status} = response;
             switch (status) {
                 case 403: {
                     yield put(updateSyncErrors('login', {password: data}));
+                    yield put(authActionError());
                     break;
                 }
                 case 404: {
                     yield put(updateSyncErrors('login', {email: data}));
+                    yield put(authActionError());
                     break;
                 }
-                case 409: {
-                    yield put(updateSyncErrors('registration', {email: 'This email is already in use'}));
-                    break;
-                }
-                default: break;
+                default: yield put(authActionError(response));
             }
+        } else {
+            yield put(authActionError(e));
         }
+    }
+}
+
+export function* refreshTokenLoginSaga({data}) {
+    try {
+        const {data: {user}} = yield authenticationController.loginUserByRefreshToken(data);
+        yield put(authActionSuccess(user));
+    } catch (e) {
         yield put(authActionError(e.response || e));
     }
 }

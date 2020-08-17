@@ -10,7 +10,9 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case USER_STORE.AUTH_ACTION_REQUEST:
+        case USER_STORE.AUTH_ACTION_REGISTRATION_REQUEST:
+        case USER_STORE.AUTH_ACTION_LOGIN_REQUEST:
+        case USER_STORE.AUTH_ACTION_REFRESH_TOKEN_LOGIN_REQUEST:
         case USER_STORE.LOGOUT_REQUEST: {
             return {
                 ...state,

@@ -2,8 +2,18 @@ import ACTION from './actionTypes';
 
 const {USER_STORE, USERS_DATA_STORE} = ACTION;
 
-export const authActionRequest = data => ({
-    type: USER_STORE.AUTH_ACTION_REQUEST,
+export const authActionRegistrationRequest = data => ({
+    type: USER_STORE.AUTH_ACTION_REGISTRATION_REQUEST,
+    data,
+});
+
+export const authActionLoginRequest = data => ({
+    type: USER_STORE.AUTH_ACTION_LOGIN_REQUEST,
+    data,
+});
+
+export const authActionRefreshTokenLoginRequest = data => ({
+    type: USER_STORE.AUTH_ACTION_REFRESH_TOKEN_LOGIN_REQUEST,
     data,
 });
 
