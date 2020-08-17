@@ -20,4 +20,12 @@ export default {
         creditCard: yup.string().test('test_card_number', value => (luhnAlgorithmCheck(value) && value.length === 16)).required().label('Credit Card Number'),
         gender: yup.string().oneOf([OTHER, MALE, FEMALE]).required().label('Gender'),
     }),
+    UpdateUserSchema: yup.object().shape({
+        firstName: yup.string().matches(VALIDATION.NAME_PATTERN, VALIDATION.NAME_PATTERN_MESSAGE).required().label('First Name'),
+        lastName: yup.string().matches(VALIDATION.NAME_PATTERN, VALIDATION.NAME_PATTERN_MESSAGE).required().label('Last Name'),
+        login: yup.string().matches(VALIDATION.NAME_PATTERN, VALIDATION.NAME_PATTERN_MESSAGE).required().label('Login'),
+        birthday: yup.date().max(new Date(), 'Nice joke').required().label('Birthday'),
+        creditCard: yup.string().test('test_card_number', value => (luhnAlgorithmCheck(value) && value.length === 16)).required().label('Credit Card Number'),
+        gender: yup.string().oneOf([OTHER, MALE, FEMALE]).required().label('Gender'),
+    }),
 }
