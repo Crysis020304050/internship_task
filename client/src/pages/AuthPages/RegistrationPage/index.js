@@ -5,10 +5,12 @@ import {connect} from 'react-redux';
 import {clearUserStoreError} from "../../../actions";
 import {Link} from 'react-router-dom';
 import RegistrationForm from '../../../components/Forms/RegistrationForm';
+import ClearUserStoreError from '../../../components/ClearUserStoreError';
 
 const RegistrationPage = ({error, isFetching, clearError}) => (
     <div className={styles.mainContainer}>
         <div className={styles.formWrapper}>
+            <ClearUserStoreError/>
             <Error error={error} clearError={clearError}/>
             <h2>CREATE AN ACCOUNT</h2>
             <RegistrationForm isFetching={isFetching} className={styles.formContainer}/>

@@ -17,18 +17,15 @@ instance.interceptors.response.use(response => response, async err => {
     const {response: {status}, config} = err;
     switch (status) {
         case 419: {
-            await refreshTokensCase(instance, config);
-            break;
+            return await refreshTokensCase(config);
         }
         case 401: {
-            unauthorizedCase();
-            break;
+            return unauthorizedCase();
         }
         default: {
             return Promise.reject(err);
         }
     }
-    return Promise.reject(err);
 });
 
 export default instance;

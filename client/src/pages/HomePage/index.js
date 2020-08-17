@@ -9,6 +9,7 @@ import TryAgain from '../../components/TryAgain';
 import UserInfoCard from '../../components/UserInfoCard';
 import Modal from '@material-ui/core/Modal';
 import UpdateUserForm from '../../components/Forms/UpdateUserForm';
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 const HomePage = ({getUsers, users, error, isFetching, hasMore, openUserEditingForm, closeUserEditingForm, currentEditingUser, clearError}) => {
 
@@ -29,21 +30,17 @@ const HomePage = ({getUsers, users, error, isFetching, hasMore, openUserEditingF
     return (
         <Container className={styles.mainContainer}>
             <Header/>
-            {
-                error
-                    ? <TryAgain getData={() => getUsers({limit: 8})} clearError={clearError}/>
-                    : <>
-                        <InfinityScrollListContainer isFetching={isFetching} hasMore={hasMore} loadMore={loadMore}
-                                                     className={styles.cardContainer}>
-                            {
-                                renderUserCard()
-                            }
-                        </InfinityScrollListContainer>
-                        <Modal className={styles.modal} open={Boolean(currentEditingUser)} onClose={closeUserEditingForm}>
-                            <UpdateUserForm className={styles.modalFormContainer}/>
-                        </Modal>
-                    </>
-            }
+            <ErrorBoundary getData={() => getUsers({limit: 8})} clearError={clearError} error={error}>
+                <InfinityScrollListContainer isFetching={isFetching} hasMore={hasMore} loadMore={loadMore}
+                                             className={styles.cardContainer}>
+                    {
+                        renderUserCard()
+                    }
+                </InfinityScrollListContainer>
+                <Modal className={styles.modal} open={Boolean(currentEditingUser)} onClose={closeUserEditingForm}>
+                    <UpdateUserForm className={styles.modalFormContainer}/>
+                </Modal>
+            </ErrorBoundary>
         </Container>
     );
 };

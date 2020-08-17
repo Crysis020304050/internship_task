@@ -6,8 +6,8 @@ import ReplayIcon from '@material-ui/icons/Replay';
 
 const TryAgain = ({getData, clearError}) => (
     <Box className={styles.container} onClick={() => {
-        getData();
         clearError();
+        getData();
     }}>
         <Box component='span'>Server Error. Try again</Box>
         <ReplayIcon/>

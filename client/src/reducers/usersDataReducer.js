@@ -66,6 +66,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 error: null,
+                users: [],
+                hasMore: true,
             }
         }
         case USER_STORE.LOGOUT_RESPONSE: {

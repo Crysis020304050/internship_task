@@ -5,10 +5,12 @@ import {connect} from 'react-redux';
 import LoginForm from '../../../components/Forms/LoginForm';
 import {clearUserStoreError} from '../../../actions';
 import {Link} from 'react-router-dom';
+import ClearUserStoreError from '../../../components/ClearUserStoreError';
 
 const LoginPage = ({error, isFetching, clearError}) => (
     <div className={styles.mainContainer}>
         <div className={styles.formWrapper}>
+            <ClearUserStoreError/>
             <Error error={error} clearError={clearError}/>
             <h2>LOGIN TO YOUR ACCOUNT</h2>
             <LoginForm isFetching={isFetching} className={styles.formContainer}/>
