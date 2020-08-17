@@ -11,10 +11,10 @@ export function* getUsersSaga({filter}) {
     }
 }
 
-export function* updateUserDataSaga({data}) {
+export function* updateUserDataSaga(action) {
     try {
-        const user = yield updateUserData(data);
-        yield put(updateUserDataSuccess(user));
+        const {data} = yield updateUserData(action.data);
+        yield put(updateUserDataSuccess(data));
     } catch (e) {
         yield put(updateUserDataError(e.response || e));
     }

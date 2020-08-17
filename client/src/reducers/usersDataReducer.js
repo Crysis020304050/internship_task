@@ -36,6 +36,7 @@ export default function (state = initialState, action) {
                 return user;
             });
             return {
+                ...state,
                 currentEditingUser: null,
                 isFetching: false,
                 users: updatedUsers,
