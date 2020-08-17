@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {authActionRequest} from '../../../actions';
-import {reduxForm, updateSyncErrors, Field} from 'redux-form';
+import {reduxForm, Field} from 'redux-form';
 import {renderFields} from '../../../utils';
 import fieldsData from './fieldsData';
 import SubmitButton from '../../FormComponents/SubmitButton';
@@ -12,15 +12,9 @@ import ChoseGenderField from "../../FormComponents/ChoseGenderField";
 import constants from '../../../constants';
 import FormField from '../../FormComponents/FormField';
 
-const RegistrationForm = ({handleSubmit, registerRequest, isFetching, responseError, dispatch, className}) => {
+const RegistrationForm = ({handleSubmit, registerRequest, isFetching, className}) => {
 
     const {VALIDATION: {CREDIT_CARD_MASK}} = constants;
-
-    useEffect(() => {
-        if (responseError && responseError.status === 409) {
-            dispatch(updateSyncErrors('registration', {email: 'This email is already in use'}));
-        }
-    }, [responseError]);
 
     const onSubmit = ({confirmPassword, ...rest}) => registerRequest(rest);
 
@@ -48,7 +42,6 @@ const mapDispatchToProps = dispatch => ({
 
 RegistrationForm.propTypes = {
     isFetching: PropTypes.bool.isRequired,
-    responseError: PropTypes.any,
     className: PropTypes.string,
 };
 
