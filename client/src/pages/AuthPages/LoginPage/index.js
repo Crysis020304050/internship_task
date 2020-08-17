@@ -6,17 +6,18 @@ import LoginForm from '../../../components/Forms/LoginForm';
 import {clearUserStoreError} from '../../../actions';
 import {Link} from 'react-router-dom';
 import ClearUserStoreError from '../../../components/ClearUserStoreError';
+import Box from "@material-ui/core/Box";
 
 const LoginPage = ({error, isFetching, clearError}) => (
-    <div className={styles.mainContainer}>
-        <div className={styles.formWrapper}>
+    <Box className={styles.mainContainer}>
+        <Box className={styles.formWrapper}>
             <ClearUserStoreError/>
             <Error error={error} clearError={clearError}/>
             <h2>LOGIN TO YOUR ACCOUNT</h2>
             <LoginForm isFetching={isFetching} className={styles.formContainer}/>
             <Link to='/registration'>Dont have an account? Register here.</Link>
-        </div>
-    </div>
+        </Box>
+    </Box>
 );
 
 const mapStateToProps = state => state.userStore;

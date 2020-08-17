@@ -1,9 +1,10 @@
 import React from "react";
 import styles from './FormField.module.sass';
 import TextField from '@material-ui/core/TextField';
+import Box from "@material-ui/core/Box";
 
 const FormField = ({label, type, input, meta: {error, touched}}) => (
-    <div className={styles.containerStyle}>
+    <Box className={styles.containerStyle}>
         <TextField
             className={styles.inputStyle}
             error={touched && Boolean(error)}
@@ -14,6 +15,6 @@ const FormField = ({label, type, input, meta: {error, touched}}) => (
             helperText={touched && error}
             InputLabelProps={type === 'date' ? { shrink: true } : {}}
         />
-    </div>
+    </Box>
 );
 export default FormField;

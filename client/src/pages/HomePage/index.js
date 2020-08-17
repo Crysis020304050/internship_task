@@ -5,7 +5,6 @@ import Header from '../../components/Header';
 import {getUsersRequest, openUserEditingForm, closeUserEditingForm, clearUsersDataStoreError} from '../../actions';
 import {connect} from 'react-redux';
 import InfinityScrollListContainer from '../../components/InfinityScrollListContainer';
-import TryAgain from '../../components/TryAgain';
 import UserInfoCard from '../../components/UserInfoCard';
 import Modal from '@material-ui/core/Modal';
 import UpdateUserForm from '../../components/Forms/UpdateUserForm';
