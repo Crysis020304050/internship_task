@@ -17,8 +17,8 @@ const RegistrationPage = ({error, isFetching, clearError}) => {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.formWrapper}>
-                <h2>CREATE AN ACCOUNT</h2>
                 {error && error.status !== 409 && <Error error={error} clearError={clearError}/>}
+                <h2>CREATE AN ACCOUNT</h2>
                 <RegistrationForm isFetching={isFetching} responseError={error} className={styles.formContainer}/>
                 <Link to='/login'>Already have an account? Login here.</Link>
             </div>
