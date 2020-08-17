@@ -8,16 +8,13 @@ import SubmitButton from '../../FormComponents/SubmitButton';
 import PropTypes from 'prop-types';
 import validator from '../../../validators/validator';
 import validationSchemas from '../../../validators/validationSchemas';
-import {RadioButton} from "material-ui";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {RadioButtonGroup} from 'redux-form-material-ui';
-import styles from './RegistrationForm.module.sass';
+import ChoseGenderField from "../../FormComponents/ChoseGenderField";
 import constants from '../../../constants';
 import FormField from '../../FormComponents/FormField';
 
 const RegistrationForm = ({handleSubmit, registerRequest, isFetching, responseError, dispatch, className}) => {
 
-    const {USER_CHARACTERISTIC: {GENDER: {OTHER, MALE, FEMALE}}, VALIDATION: {CREDIT_CARD_MASK}} = constants;
+    const {VALIDATION: {CREDIT_CARD_MASK}} = constants;
 
     useEffect(() => {
         if (responseError && responseError.status === 409) {
@@ -33,16 +30,7 @@ const RegistrationForm = ({handleSubmit, registerRequest, isFetching, responseEr
                 renderFields(fieldsData)
             }
             <Field name='creditCard' label='Credit Card Number' component={FormField} {...CREDIT_CARD_MASK}/>
-            <MuiThemeProvider>
-                <div className={styles.choseGenderContainer}>
-                    <span>Chose your gender:</span>
-                    <Field name="gender" component={RadioButtonGroup}>
-                        <RadioButton value={OTHER} label="Other"/>
-                        <RadioButton value={MALE} label="Male"/>
-                        <RadioButton value={FEMALE} label="Female"/>
-                    </Field>
-                </div>
-            </MuiThemeProvider>
+            <ChoseGenderField/>
             <SubmitButton isFetching={isFetching} text='REGISTRATION'/>
         </form>
     )
@@ -50,7 +38,7 @@ const RegistrationForm = ({handleSubmit, registerRequest, isFetching, responseEr
 
 const mapStateToProps = (state) => ({
     initialValues: {
-        gender: 'other',
+        gender: constants.USER_CHARACTERISTIC.GENDER.OTHER,
     },
 });
 
