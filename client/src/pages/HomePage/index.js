@@ -9,17 +9,19 @@ import UserInfoCard from '../../components/UserInfoCard';
 import Modal from '@material-ui/core/Modal';
 import UpdateUserForm from '../../components/Forms/UpdateUserForm';
 import ErrorBoundary from "../../components/ErrorBoundary";
-import userReducer from "../../reducers/userReducer";
+import constants from '../../constants';
 
 const HomePage = ({getUsers, users, error, isFetching, hasMore, role, openUserEditingForm, closeUserEditingForm, currentEditingUser, clearError}) => {
 
+    const {OTHERS: {DATA_LOADING_LIMIT}} = constants;
+
     useEffect(() => {
-        getUsers({limit: 8});
+        getUsers({limit: DATA_LOADING_LIMIT});
     }, []);
 
     const loadMore = (offset) => {
         getUsers({
-            limit: 8,
+            limit: DATA_LOADING_LIMIT,
             offset,
         });
     };
@@ -30,7 +32,7 @@ const HomePage = ({getUsers, users, error, isFetching, hasMore, role, openUserEd
     return (
         <Container className={styles.mainContainer}>
             <Header/>
-            <ErrorBoundary getData={() => getUsers({limit: 8})} clearError={clearError} error={error}>
+            <ErrorBoundary getData={() => getUsers({limit: DATA_LOADING_LIMIT})} clearError={clearError} error={error}>
                 <InfinityScrollListContainer isFetching={isFetching} hasMore={hasMore} loadMore={loadMore}
                                              className={styles.cardContainer}>
                     {

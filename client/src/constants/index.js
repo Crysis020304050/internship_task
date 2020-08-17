@@ -28,5 +28,8 @@ export default Object.freeze({
     TOKENS: {
         ACCESS_TOKEN_KEY: 'accessTokenKey',
         REFRESH_TOKEN_KEY: 'refreshTokenKey'
+    },
+    OTHERS: {
+        DATA_LOADING_LIMIT: 8,
     }
 });

@@ -20,5 +20,8 @@ module.exports = Object.freeze({
         ACCESS_TOKEN_TIME: 60 * 10,
         REFRESH_TOKEN_TIME: 60 * 60 * 24 * 30,
         SALT_ROUNDS: 5,
+    },
+    OTHERS: {
+        DATA_LOADING_LIMIT: 8,
     }
 });

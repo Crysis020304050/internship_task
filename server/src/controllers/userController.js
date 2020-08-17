@@ -1,5 +1,5 @@
 const {createUser, getUsers, updateUser} = require('./queries/userQueries');
-const {USER_CHARACTERISTIC: {ROLE: {CUSTOMER}}} = require('../constants');
+const {USER_CHARACTERISTIC: {ROLE: {CUSTOMER}}, OTHERS: {DATA_LOADING_LIMIT}} = require('../constants');
 const {prepareUserToSending} = require('../utils');
 const db = require('../db/models');
 
@@ -23,7 +23,7 @@ module.exports.getUsers = async (req, res, next) => {
                 },
                 ...(role === CUSTOMER && {role: CUSTOMER}),
             },
-            limit: limit || 8,
+            limit: limit || DATA_LOADING_LIMIT,
             offset: offset || 0,
             order: [['id', 'DESC']],
             attributes: {exclude: ['password', 'role', 'createdAt', 'updatedAt', (role === CUSTOMER && 'creditCard')]},
