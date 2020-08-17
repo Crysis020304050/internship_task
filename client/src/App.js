@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import {authActionRequest} from './actions';
 import PrivateHoc from './components/HOCs/PrivateHoc';
 import OnlyNotAuthorizedUserHoc from './components/HOCs/OnlyNotAuthorizedUserHoc';
+import ClearErrorHoc from "./components/HOCs/ClearErrorHoc";
 
 const LoginPage = lazy(() => import('./pages/AuthPages/LoginPage'));
 const RegistrationPage = lazy(() => import('./pages/AuthPages/RegistrationPage'));
@@ -25,8 +26,8 @@ const App = ({getUser}) => {
         <Router history={history}>
             <Suspense fallback={<Spinner/>}>
                 <Switch>
-                    <Route exact path='/login' component={OnlyNotAuthorizedUserHoc(LoginPage)}/>
-                    <Route exact path='/registration' component={OnlyNotAuthorizedUserHoc(RegistrationPage)}/>
+                    <Route exact path='/login' component={OnlyNotAuthorizedUserHoc(ClearErrorHoc(LoginPage))}/>
+                    <Route exact path='/registration' component={OnlyNotAuthorizedUserHoc(ClearErrorHoc(RegistrationPage))}/>
                     <Route exact path='/' component={PrivateHoc(HomePage)}/>
                 </Switch>
             </Suspense>

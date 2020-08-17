@@ -17,9 +17,9 @@ const OnlyNotAuthorizedUserHoc = (Component) => {
         return (
             <>
                 {
-                    !data
-                        ? <Component history={history} match={match}/>
-                        : <Spinner/>
+                    data
+                        ? <Spinner/>
+                        : <Component history={history} match={match}/>
                 }
             </>
         );
