@@ -12,12 +12,9 @@ module.exports = {
       email: 'administrator@gmail.com',
       password: hashPassword,
       birthday: '2019-02-01',
-      creditCard: '4222222222222222',
+      creditCard: '4111111111111111',
       gender: OTHER,
       role: ADMIN,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-
     };
     await queryInterface.bulkInsert('Users', [administrator], {});
   },

@@ -26,7 +26,7 @@ module.exports.getUsers = async (req, res, next) => {
             limit: limit || DATA_LOADING_LIMIT,
             offset: offset || 0,
             order: [['id', 'DESC']],
-            attributes: {exclude: ['password', 'role', 'createdAt', 'updatedAt', (role === CUSTOMER && 'creditCard')]},
+            attributes: {exclude: ['password', 'role', (role === CUSTOMER && 'creditCard')]},
         });
         res.send({users, hasMore: users.length >= limit});
     } catch (e) {
