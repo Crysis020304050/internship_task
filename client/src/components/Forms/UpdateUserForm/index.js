@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {updateUserDataRequest} from '../../../actions';
-import {reduxForm, Field} from 'redux-form';
+import {reduxForm, Field, formValueSelector} from 'redux-form';
 import {renderFields} from '../../../utils';
 import fieldsData from './fieldsData';
 import SubmitButton from '../../FormComponents/SubmitButton';
@@ -12,8 +12,9 @@ import constants from '../../../constants';
 import FormField from '../../FormComponents/FormField';
 import ChoseGenderField from "../../FormComponents/ChoseGenderField";
 import moment from 'moment';
+import _ from 'lodash';
 
-const UpdateUserForm = ({handleSubmit, isFetching, className, updateUserDataRequest, id}) => {
+const UpdateUserForm = ({handleSubmit, isFetching, className, updateUserDataRequest, id, initialValues, formValues}) => {
 
     const {VALIDATION: {CREDIT_CARD_MASK}} = constants;
 
@@ -26,13 +27,15 @@ const UpdateUserForm = ({handleSubmit, isFetching, className, updateUserDataRequ
             }
             <Field name='creditCard' label='Credit Card Number' component={FormField} {...CREDIT_CARD_MASK}/>
             <ChoseGenderField/>
-            <SubmitButton isFetching={isFetching} text='UPDATE'/>
+            <SubmitButton isFetching={isFetching} disabled={_.isEqual(initialValues, formValues)} text='UPDATE'/>
         </form>
     )
 };
 
 const mapStateToProps = (state) => {
     const {usersDataStore: {isFetching, currentEditingUser: {id, firstName, lastName, login, birthday, creditCard, gender}}} = state;
+    const selector = formValueSelector('updateUser');
+    const formValues = selector(state, 'firstName', 'lastName', 'login', 'creditCard', 'birthday', 'gender');
     return {
         initialValues: {
             firstName,
@@ -42,6 +45,7 @@ const mapStateToProps = (state) => {
             birthday: moment(birthday).format('YYYY-MM-DD'),
             gender,
         },
+        formValues,
         isFetching,
         id,
     }
