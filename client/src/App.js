@@ -1,12 +1,12 @@
 import React, {lazy, Suspense, useEffect} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Router, Switch} from 'react-router-dom';
 import history from './browserHistory';
 import Spinner from './components/Spinner';
 import constants from './constants';
 import {connect} from 'react-redux';
 import {authActionRefreshTokenLoginRequest} from './actions';
-import PrivateHoc from './components/HOCs/PrivateHoc';
-import OnlyNotAuthorizedUserHoc from './components/HOCs/OnlyNotAuthorizedUserHoc';
+import PrivateRoute from "./components/Routes/PrivateRoute";
+import OnlyNotAuthorizedUserRoute from "./components/Routes/OnlyNotAuthorizedUserRoute";
 
 const LoginPage = lazy(() => import('./pages/AuthPages/LoginPage'));
 const RegistrationPage = lazy(() => import('./pages/AuthPages/RegistrationPage'));
@@ -25,9 +25,9 @@ const App = ({getUser}) => {
         <Router history={history}>
             <Suspense fallback={<Spinner/>}>
                 <Switch>
-                    <Route exact path='/login' component={OnlyNotAuthorizedUserHoc(LoginPage)}/>
-                    <Route exact path='/registration' component={OnlyNotAuthorizedUserHoc(RegistrationPage)}/>
-                    <Route exact path='/' component={PrivateHoc(HomePage)}/>
+                    <OnlyNotAuthorizedUserRoute exact path='/login' component={LoginPage}/>
+                    <OnlyNotAuthorizedUserRoute exact path='/registration' component={RegistrationPage}/>
+                    <PrivateRoute exact path='/' component={HomePage}/>
                 </Switch>
             </Suspense>
         </Router>

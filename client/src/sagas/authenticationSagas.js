@@ -9,6 +9,7 @@ export function* registrationSaga({data}) {
     try {
         const {data: {user}} = yield authenticationController.registerRequest(data);
         yield put(authActionSuccess(user));
+        history.replace('/');
     } catch (e) {
         const {response} = e;
         if (response && response.status === 409) {
@@ -24,6 +25,7 @@ export function* loginSaga({data}) {
     try {
         const {data: {user}} = yield authenticationController.loginRequest(data);
         yield put(authActionSuccess(user));
+        history.replace('/login');
     } catch (e) {
         const {response} = e;
         if (response) {
@@ -51,6 +53,7 @@ export function* refreshTokenLoginSaga({data}) {
     try {
         const {data: {user}} = yield authenticationController.loginUserByRefreshToken(data);
         yield put(authActionSuccess(user));
+        history.replace('/');
     } catch (e) {
         yield put(authActionError(e.response || e));
     }
@@ -62,8 +65,8 @@ export function* logoutSaga({data}) {
     } catch (e) {
         throw e;
     } finally {
-        yield put(logoutResponse());
         clearStorage();
-        history.replace('/login');
+        history.replace('/');
+        yield put(logoutResponse());
     }
 }
