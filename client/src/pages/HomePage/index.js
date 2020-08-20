@@ -6,7 +6,8 @@ import {getUsersRequest, openUserEditingForm, closeUserEditingForm, clearUsersDa
 import {connect} from 'react-redux';
 import InfinityScrollListContainer from '../../components/InfinityScrollListContainer';
 import UserInfoCard from '../../components/UserInfoCard';
-import Modal from '@material-ui/core/Modal';
+//import Modal from '@material-ui/core/Modal';
+import PortalModal from "../../components/PortalModal";
 import UpdateUserForm from '../../components/Forms/UpdateUserForm';
 import ErrorBoundary from "../../components/ErrorBoundary";
 import constants from '../../constants';
@@ -39,17 +40,20 @@ const HomePage = ({getUsers, users, error, isFetching, hasMore, role, openUserEd
                         renderUserCard()
                     }
                 </InfinityScrollListContainer>
-                <Modal className={styles.modal} open={Boolean(currentEditingUser)} onClose={closeUserEditingForm}>
+                {/*<Modal className={styles.modal} open={Boolean(currentEditingUser)} onClose={closeUserEditingForm}>
                     <UpdateUserForm className={styles.modalFormContainer}/>
-                </Modal>
+                </Modal>*/}
+                {currentEditingUser && <PortalModal onClose={closeUserEditingForm}>
+                    <UpdateUserForm className={styles.modalFormContainer}/>
+                </PortalModal>}
             </ErrorBoundary>
         </Container>
     );
 };
 
 const mapStateToProps = state => {
-    const {usersDataStore, userStore: {data: {role}}} = state;
-    return {...usersDataStore, role};
+    const {usersDataStore, userStore: {data}} = state;
+    return {...usersDataStore, ...(data && {role: data.role})};
 };
 
 const mapDispatchToProps = dispatch => ({
